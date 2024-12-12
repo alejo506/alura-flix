@@ -1,0 +1,85 @@
+{
+    "categories": [
+        {
+            "id": "cibersecurity",
+            "nombre": "cibersecurity"
+        },
+        {
+            "id": "BackEnd",
+            "nombre": "BackEnd"
+        },
+        {
+            "id": "FrontEnd",
+            "nombre": "FrontEnd"
+        }
+    ],
+    "videos": [
+        {
+            "id": 1,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Jean.png",
+            "videoURL": "https://www.youtube.com/embed/AG2QssLpQzI?si=6Yn355wcxAqU7_Ld",
+            "description": "Descripcion video"
+
+        },
+        {
+            "id": 2,
+            "categoria": "BackEnd",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Gabi.png",
+            "videoURL": "https://www.youtube.com/embed/AULPtYo25Lw?si=UGdKX1NSrEcQ0jfn",
+            "description": "Descripcion video"
+        },
+        {
+            "id": 3,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Genesis.png",
+            "videoURL": "https://www.youtube.com/embed/03cxUlwLVt4?si=zVCUQNO-eS2RZQTO",
+            "description": "Descripcion video"
+        },
+        {
+            "id": 4,
+            "categoria": "BackEnd",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Ale.png",
+            "videoURL": "https://www.youtube.com/embed/5T_Q_NtNLZE?si=M7D0JeagaKqsoaFs",
+            "description": "Descripcion video"
+        },
+         {
+            "id": 5,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Jean.png",
+            "videoURL": "https://www.youtube.com/embed/AG2QssLpQzI?si=6Yn355wcxAqU7_Ld",
+            "description": "Descripcion video"
+
+        },
+        {
+            "id": 6,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Gabi.png",
+            "videoURL": "https://www.youtube.com/embed/AULPtYo25Lw?si=UGdKX1NSrEcQ0jfn",
+            "description": "Descripcion video"
+        },
+        {
+            "id": 7,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Genesis.png",
+            "videoURL": "https://www.youtube.com/embed/03cxUlwLVt4?si=zVCUQNO-eS2RZQTO",
+            "description": "Descripcion video"
+        },
+        {
+            "id": 8,
+            "categoria": "cibersecurity",
+            "title": "Baño en perros",
+            "thumbnail": "https://caelum-online-public.s3.amazonaws.com/ESP-2052+-++React%3A+practicando+React+con+Js/282x425+-+Ale.png",
+            "videoURL": "https://www.youtube.com/embed/5T_Q_NtNLZE?si=M7D0JeagaKqsoaFs",
+            "description": "Descripcion video"
+        }
+        
+    ]
+}
