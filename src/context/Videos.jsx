@@ -20,7 +20,7 @@ export default function VideosProvider({ children }) {
 
     console.log(data);
 
-
+    // ? VIDEOS
     // No se agrega el method: Get porque es el metodo predeterminado del fetch
     const fetchVideos = async () => {
         try {
@@ -139,7 +139,7 @@ export default function VideosProvider({ children }) {
 
 
 
-    // !TODO: Descomentar cuando se implemente la logica y dise;o para agregar categoria
+    // ? CATEGORIAS
     const addCategory = async (newCategory) => {
         try {
 

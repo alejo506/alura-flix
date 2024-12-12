@@ -4,10 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import PageBase from './pages/PageBase'
 import AddVideo from './pages/AddVideo/AddVideo'
 
-// import '@fontsource/source-sans-pro'; // Fuente normal (400)
-// import '@fontsource/source-sans-pro/600.css'; // Fuente semibold (600)
-// import '@fontsource/source-sans-pro/700.css'; // Fuente bold (700)
-
 function AppRoutes() {
 
   return (

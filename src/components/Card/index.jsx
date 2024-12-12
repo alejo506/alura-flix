@@ -1,14 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Card, CardMedia, CardActions, IconButton, Typography, CardHeader, Box, TextField, MenuItem } from "@mui/material";
+import { Card, CardMedia, CardActions, IconButton, Typography, CardHeader, Box, TextField, MenuItem, Button } from "@mui/material";
+import { VideosContext } from "@/context/Videos";
 import deleteBttn from "/icons/delete.svg";
 import updateBttn from "/icons/update.svg";
-import { VideosContext } from "@/context/Videos";
 import ModalElement from "../ModalElement";
-import TitleElement from "../TitleElement";
-import TextFieldElement from "../TextFieldElement";
-import ButtonElement from "../ButtonElement/ButtonElement";
-import { fieldStyles, selectStyles, menuItemStyles } from "@/utils/textFieldStyles"; 
-import buttonStyles from "@/utils/buttonStyles";
+import { fieldStyles, selectStyles, menuItemStyles } from "@/utils/textFieldStyles";
+import { useModalState } from "@/customHook/useModalState";
+import VideoPlayerModal from "../ModalElement/Modals/VideoPlayerModal";
+import UpdateVideoForm from "../ModalElement/Modals/UpdateVideoFormModal";
 
 const cardStyles = {
   width: { xs: "90%", sm: "45%", md: "30%" },
@@ -18,17 +17,22 @@ const cardStyles = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+
 };
 
 const mediaStyles = {
   width: "100%",
-  height: "100%",
+  height: "350px",
   position: "relative",
+  borderRadius: "16px",
+  objectFit: "cover",
+  objectPosition: "center"
 };
 
 const imgBorderStyles = ($categoryColor) => ({
   border: `4px solid ${$categoryColor}`,
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
+
 });
 
 const headerStyles = ($categoryColor) => ({
@@ -53,12 +57,12 @@ const VideoCard = ({ video, $categoryColor }) => {
   const { deleteVideo, updateVideo, data } = useContext(VideosContext);
   const { categories } = data;
 
-  const [open, setOpen] = useState(false);
+  const { open: openUpdate, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModalState();
+  const { open: openVideo, openModal: openVideoModal, closeModal: closeVideoModal } = useModalState();
+
   const [selectedVideo, setSelectedVideo] = useState(video);
 
   const handleDelete = () => deleteVideo(video.id);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleInputChange = (field, value) => {
     setSelectedVideo((prevState) => ({
@@ -69,7 +73,7 @@ const VideoCard = ({ video, $categoryColor }) => {
 
   const handleUpdate = () => {
     updateVideo(selectedVideo);
-    setOpen(false);
+    closeUpdateModal(false);
   };
 
 
@@ -91,7 +95,35 @@ const VideoCard = ({ video, $categoryColor }) => {
             },
           }}
         >
-          <CardMedia component="img" image={video.thumbnail} alt="Thumbnail" sx={mediaStyles} />
+
+          <Box
+            sx={{
+              // width: "400px",
+              height: "350px",
+              position: "relative", // Contenedor relativo para posicionar el botón sobre la imagen
+              overflow: "hidden",
+              borderRadius: "8px", // Bordes redondeados opcionales
+            }}
+          >
+            <CardMedia component="img" image={video.thumbnail} alt="Thumbnail" sx={mediaStyles} />
+            {/* Botón superpuesto */}
+            <Button
+              onClick={openVideoModal}
+              sx={{
+                position: "absolute", // Superpone el botón sobre la imagen
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                color: "white",
+                zIndex: 1, // Asegura que esté encima de la imagen
+                "&:hover": {
+                  background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
+                },
+              }}
+            >
+            </Button>
+          </Box>
         </Box>
         <CardHeader title={video.title} sx={headerStyles($categoryColor)} />
         <CardActions sx={actionStyles($categoryColor)}>
@@ -99,66 +131,43 @@ const VideoCard = ({ video, $categoryColor }) => {
             <img src={deleteBttn} alt="Delete" />
             <Typography variant="body2" sx={{ color: "#FFFFFF" }}>Delete</Typography>
           </IconButton>
-          <IconButton aria-label="update" size="large" onClick={handleOpen}>
+          <IconButton aria-label="update" size="large" onClick={openUpdateModal}>
             <img src={updateBttn} alt="Update" />
             <Typography variant="body2" sx={{ color: "#FFFFFF" }}>Update</Typography>
           </IconButton>
         </CardActions>
       </Card>
 
+      {/* Modal para actualizar video */}
       <ModalElement
-        open={open}
-        handleClose={handleClose}
-        style={{ backgroundColor: "#03122F", display: "flex", flexDirection: "column", gap: "16px" }}
+        open={openUpdate}
+        handleClose={closeUpdateModal}
+        style={{ backgroundColor: "#03122F", padding: "16px" }}
       >
-        <TitleElement text="Update Video" sx={{ fontWeight: "900", color: "#2271D1" }} />
-        <TextFieldElement
-          label="Title"
-          value={selectedVideo?.title || ""}
-          onChange={(e) => handleInputChange("title", e.target.value)}
-          sx={fieldStyles}
+        <UpdateVideoForm
+          video={selectedVideo}
+          categories={categories}
+          onInputChange={handleInputChange}
+          onUpdate={handleUpdate}
+          fieldStyles={fieldStyles}
+          selectStyles={selectStyles}
+          menuItemStyles={menuItemStyles}
         />
-        <TextField
-          select
-          label="Category"
-          value={selectedVideo?.categoria || ""}
-          onChange={(e) => handleInputChange("categoria", e.target.value)}
-          fullWidth
-          sx={{...selectStyles, ...fieldStyles}}
-        >
-          {categories.map((category) => (
-            <MenuItem key={category.id} value={category.nombre} sx={menuItemStyles}>
-              {category.nombre}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <TextFieldElement
-          label="Thumbnail"
-          value={selectedVideo?.thumbnail || ""}
-          onChange={(e) => handleInputChange("thumbnail", e.target.value)}
-          sx={fieldStyles}
-        />
-        <TextFieldElement
-          label="Video URL"
-          value={selectedVideo?.videoURL || ""}
-          onChange={(e) => handleInputChange("videoURL", e.target.value)}
-          sx={fieldStyles}
-        />
-        <TextFieldElement
-          label="Description"
-          value={selectedVideo?.description || ""}
-          onChange={(e) => handleInputChange("description", e.target.value)}
-          sx={fieldStyles}
-        />
-
-        <ButtonElement
-          onClick={handleUpdate}
-          sx={buttonStyles("#2271D1", "#2271D1", "#2271D1")}
-        >
-          Update
-        </ButtonElement>
       </ModalElement>
+
+      {/* Modal para reproducir video */}
+      <ModalElement
+        open={openVideo}
+        handleClose={closeVideoModal}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <VideoPlayerModal videoURL={video.videoURL} onClose={closeVideoModal} />
+      </ModalElement>
+
     </>
   );
 };
