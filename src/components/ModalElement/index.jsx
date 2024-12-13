@@ -1,30 +1,41 @@
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, IconButton } from "@mui/material";
 
 
-const ModalElement = ({ open, handleClose, children, style = {} }) => {
+const ModalElement = ({ open, onClose, children, style = {} }) => {
   const defaultStyle = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "90%", // Reduce el ancho al 90% del viewport
-    maxWidth: 600, // No más de 400px
+    width: "90%", 
+    maxWidth: 600, 
     // bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
     borderRadius: "8px",
-    overflow: "auto", // Habilita scroll si el contenido excede el tamaño
-    ...style, // Permite sobrescribir estilos desde las props
+    overflow: "auto", 
+    ...style, 
   };
 
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+    // onClose={handleClose}
     >
       <Box sx={{ ...defaultStyle }}>
-        {children}
-      </Box>
+          <IconButton
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 16,
+              color: "#FFFFFF",
+            }}
+          >
+            ✖
+          </IconButton>
+          {children}
+        </Box>
     </Modal>
   );
 };

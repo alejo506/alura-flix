@@ -17,6 +17,7 @@ const Home = () => {
             <section >
                 {/* <Header /> */}
                 {/* Banner */}
+                
                 {!isMobile && (
                     <Banner />
                 )}

@@ -7,16 +7,21 @@ import TitleElement from "@/components/TitleElement";
 import buttonStyles from "@/utils/buttonStyles";
 import { fieldStyles, selectStyles, menuItemStyles } from "@/utils/textFieldStyles";
 import ModalElement from "@/components/ModalElement";
+import { useModalState } from "@/customHook/useModalState";
+import AddCategoryModal from "@/components/ModalElement/Modals/AddCategoryModal";
 
 
 const AddVideo = () => {
   const { data, addVideo, addCategory } = useContext(VideosContext);
   const { categories } = data;
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+  const { open: openCategory, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModalState();
+
 
   const [titleField, setTitleField] = useState('');
   const [categoryField, setCategoryField] = useState('');
@@ -38,9 +43,7 @@ const AddVideo = () => {
       description: descriptionField
     }
 
-    // console.log(sendDataForm);
     //Funcion de agregar/ Crear en el context
-
     addVideo(sendDataForm);
     cleanFields();
 
@@ -56,30 +59,23 @@ const AddVideo = () => {
   }
 
 
-
-
   //Estados Modal para agregar Categoria
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryColor, setNewCategoryColor] = useState("#000000");
-  // console.log(newCategoryName);
-  // console.log(newCategoryColor);
 
-  // console.log(addCategory);
 
   const handleAddCategory = () => {
-
     const newCategory = {
       nombre: newCategoryName,
       color: newCategoryColor
     }
 
-    setOpen(false);
+    closeCategoryModal();
 
     addCategory(newCategory);
 
     setNewCategoryName("");
     setNewCategoryColor("#000000");
-
   }
 
 
@@ -145,46 +141,36 @@ const AddVideo = () => {
           required
           sx={fieldStyles}
         />
-        <Box sx={{ display: "flex", gap: "16px" }}>
-          <ButtonElement type="submit" variant="outlined" sx={buttonStyles("#2271D1", "#FFFFFF", "#2271D1")} >Save</ButtonElement>
-          <ButtonElement onClick={cleanFields} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")} > Clear </ButtonElement>
-          <ButtonElement onClick={handleOpen} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")} > Add Category </ButtonElement>
+        <Box display="flex" gap="16px"
+          sx={{
+            flexDirection: { xs: "column", sm: "row" },
+            width: "100%"
+          }}
+        >
+          <ButtonElement type="submit" variant="outlined" sx={buttonStyles("#2271D1", "#FFFFFF", "#2271D1")}>Save</ButtonElement>
+          <ButtonElement onClick={cleanFields} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")}>Clear</ButtonElement>
+          <ButtonElement onClick={openCategoryModal} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")}>Add Category</ButtonElement>
         </Box>
+
       </form>
 
+      {/* Modal para agregar categorias */}
       <ModalElement
-        open={open}
-        handleClose={handleClose}
+        open={openCategory}
         style={{ backgroundColor: "#03122F" }}
+        onClose={closeCategoryModal}
+
       >
-        <form onSubmit={handleAddCategory} style={{ display: "flex", flexDirection: "column", gap: "16px"}}>
-          <TitleElement text="Add Category" sx={{ fontWeight: "900", color: "#2271D1" }} />
-          <TextFieldElement
-            label="Category name"
-            value={newCategoryName}
-            onChange={handleInputChange(setNewCategoryName)}
-            sx={fieldStyles}
-            required
+        <AddCategoryModal
+          onInputChange={handleInputChange}
+          onUpdate={handleAddCategory}
+          newCategoryName={newCategoryName}
+          newCategoryColor={newCategoryColor}
+          setNewCategoryName={setNewCategoryName}
+          setNewCategoryColor={setNewCategoryColor}
+          fieldStyles={fieldStyles}
+        />
 
-          />
-          <TextField
-            label="Color"
-            type="color"
-            value={newCategoryColor}
-            onChange={handleInputChange(setNewCategoryColor)}
-            sx={fieldStyles}
-            required
-
-          />
-
-          <ButtonElement
-            type="submit"
-            sx={buttonStyles("#2271D1", "#2271D1", "#2271D1")}
-            
-          >
-            Save
-          </ButtonElement>
-        </form>
       </ModalElement>
     </Box>
   );

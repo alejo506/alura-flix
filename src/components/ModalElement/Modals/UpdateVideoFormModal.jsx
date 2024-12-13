@@ -1,11 +1,21 @@
 import ButtonElement from "@/components/ButtonElement/ButtonElement";
 import TitleElement from "@/components/TitleElement";
 import buttonStyles from "@/utils/buttonStyles";
-import { Typography, TextField, MenuItem, Box } from "@mui/material";
+import {TextField, MenuItem, Box, IconButton } from "@mui/material";
 
 
-const UpdateVideoForm = ({ video, categories, onInputChange, onUpdate, fieldStyles, selectStyles, menuItemStyles }) => (
-  <Box display="flex" flexDirection="column" gap={3}>
+const UpdateVideoForm = ({ video, categories, onInputChange, onUpdate, fieldStyles, selectStyles }) => (
+  <form onSubmit={onUpdate}>
+
+  
+<Box
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    gap={3}
+    width="100%"
+  >
+   
     <TitleElement  text="Update Video" sx={{ fontWeight: "900", color: "#2271D1" }}>
       Update Video
     </TitleElement>
@@ -56,10 +66,11 @@ const UpdateVideoForm = ({ video, categories, onInputChange, onUpdate, fieldStyl
       sx={fieldStyles}
 
     />
-    <ButtonElement onClick={onUpdate} sx={buttonStyles("#2271D1", "#2271D1", "#2271D1")}>
+    <ButtonElement type="submit" sx={buttonStyles("#2271D1", "#2271D1", "#2271D1")}>
       Update
     </ButtonElement>
   </Box>
+  </form>
 );
 
 export default UpdateVideoForm;

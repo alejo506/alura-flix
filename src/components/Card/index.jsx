@@ -73,7 +73,7 @@ const VideoCard = ({ video, $categoryColor }) => {
 
   const handleUpdate = () => {
     updateVideo(selectedVideo);
-    closeUpdateModal(false);
+    closeUpdateModal();
   };
 
 
@@ -141,7 +141,7 @@ const VideoCard = ({ video, $categoryColor }) => {
       {/* Modal para actualizar video */}
       <ModalElement
         open={openUpdate}
-        handleClose={closeUpdateModal}
+        onClose={closeUpdateModal}
         style={{ backgroundColor: "#03122F", padding: "16px" }}
       >
         <UpdateVideoForm
@@ -158,14 +158,15 @@ const VideoCard = ({ video, $categoryColor }) => {
       {/* Modal para reproducir video */}
       <ModalElement
         open={openVideo}
-        handleClose={closeVideoModal}
+        onClose={closeVideoModal}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: "#ffffff45",
         }}
       >
-        <VideoPlayerModal videoURL={video.videoURL} onClose={closeVideoModal} />
+        <VideoPlayerModal videoURL={video.videoURL} />
       </ModalElement>
 
     </>
@@ -173,3 +174,10 @@ const VideoCard = ({ video, $categoryColor }) => {
 };
 
 export default VideoCard;
+
+
+
+
+
+
+

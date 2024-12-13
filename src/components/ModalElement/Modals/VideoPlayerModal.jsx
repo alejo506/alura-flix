@@ -1,26 +1,8 @@
 import { Box, IconButton } from "@mui/material";
 // import CloseIcon from "@mui/icons-material/Close";
 
-const VideoPlayerModal = ({ videoURL, onClose }) => (
-  <Box
-    position="relative"
-    display="flex"
-    flexDirection="column"
-    alignItems="center"
-    justifyContent="center"
-    gap={2}
-  >
-    <IconButton
-      onClick={onClose}
-      sx={{
-        position: "absolute",
-        top: 0,
-        right: 16,
-        color: "#FFFFFF",
-      }}
-    >
-      ✖
-    </IconButton>
+const VideoPlayerModal = ({ videoURL }) => (
+ 
     <Box
       sx={{
         width: "90%",
@@ -39,7 +21,7 @@ const VideoPlayerModal = ({ videoURL, onClose }) => (
         allowFullScreen
       ></iframe>
     </Box>
-  </Box>
+
 );
 
 export default VideoPlayerModal;
