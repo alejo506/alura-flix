@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { VideosContext } from "@/context/Videos";
-import { MenuItem, Box, Typography, TextField } from "@mui/material";
+import { MenuItem, Box, Typography, TextField, Stack } from "@mui/material";
 import ButtonElement from "@/components/ButtonElement/ButtonElement";
 import TextFieldElement from "@/components/TextFieldElement";
 import TitleElement from "@/components/TitleElement";
@@ -141,15 +141,10 @@ const AddVideo = () => {
           required
           sx={fieldStyles}
         />
-        <Box display="flex" gap="16px"
-          sx={{
-            flexDirection: { xs: "column", sm: "row" },
-            width: "100%"
-          }}
-        >
+        <Box display="flex" flexDirection={{xs: "column", sm: "row"}} gap="16px" width= "100%">
           <ButtonElement type="submit" variant="outlined" sx={buttonStyles("#2271D1", "#FFFFFF", "#2271D1")}>Save</ButtonElement>
           <ButtonElement onClick={cleanFields} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")}>Clear</ButtonElement>
-          <ButtonElement onClick={openCategoryModal} variant="outlined" sx={buttonStyles("#FFFFFF", "#FFFFFF")}>Add Category</ButtonElement>
+          <ButtonElement onClick={openCategoryModal} variant="outlined" sx={{...buttonStyles("#FFFFFF", "#2271d1"), marginLeft: { sm: "auto" }}}>Add Category</ButtonElement>
         </Box>
 
       </form>
