@@ -54,27 +54,15 @@ const actionStyles = ($categoryColor) => ({
 });
 
 const VideoCard = ({ video, $categoryColor }) => {
-  const { deleteVideo, updateVideo, data } = useContext(VideosContext);
+  const { deleteVideo, data } = useContext(VideosContext);
   const { categories } = data;
 
   const { open: openUpdate, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModalState();
   const { open: openVideo, openModal: openVideoModal, closeModal: closeVideoModal } = useModalState();
 
-  const [selectedVideo, setSelectedVideo] = useState(video);
+  const [selectedVideo] = useState(video);
 
   const handleDelete = () => deleteVideo(video.id);
-
-  const handleInputChange = (field, value) => {
-    setSelectedVideo((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
-  const handleUpdate = () => {
-    updateVideo(selectedVideo);
-    closeUpdateModal();
-  };
 
 
   return (
@@ -147,11 +135,11 @@ const VideoCard = ({ video, $categoryColor }) => {
         <UpdateVideoForm
           video={selectedVideo}
           categories={categories}
-          onInputChange={handleInputChange}
-          onUpdate={handleUpdate}
           fieldStyles={fieldStyles}
           selectStyles={selectStyles}
           menuItemStyles={menuItemStyles}
+          closeUpdateModal={closeUpdateModal}
+
         />
       </ModalElement>
 

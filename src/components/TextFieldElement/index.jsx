@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-const TextFieldElement = ({ id, label, value, onChange, variant = "outlined", required = false, sx = {}, multiline = false, rows }) => {
+const TextFieldElement = ({ id, label, value, onChange, variant = "outlined", error, helperText, onBlur, required = false, sx = {}, multiline = false, rows }) => {
   return (
     <TextField
       id={id}
@@ -8,6 +8,9 @@ const TextFieldElement = ({ id, label, value, onChange, variant = "outlined", re
       value={value}
       onChange={onChange}
       variant={variant}
+      error={error}
+      helperText={helperText}
+      onBlur={onBlur}
       required={required}
       fullWidth
       margin="normal"

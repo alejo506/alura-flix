@@ -1,5 +1,4 @@
 import { Box, IconButton } from "@mui/material";
-// import CloseIcon from "@mui/icons-material/Close";
 
 const VideoPlayerModal = ({ videoURL }) => (
  
