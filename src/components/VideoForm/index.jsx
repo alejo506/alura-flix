@@ -4,8 +4,11 @@ import ButtonElement from "@/components/ButtonElement/ButtonElement";
 import buttonStyles from "@/utils/buttonStyles";
 import { VideosContext } from "@/context/Videos";
 import TextFieldElement from "../TextFieldElement";
+import { fieldStyles, menuItemStyles, selectStyles } from "@/utils/textFieldStyles";
 
-const VideoForm = ({ categories = [], video, fieldStyles, selectStyles, menuItemStyles, mode = "create", closeUpdateModal }) => {
+
+const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }) => {
+  
   const { addVideo, updateVideo } = useContext(VideosContext);
 
   const [formValues, setFormValues] = useState({

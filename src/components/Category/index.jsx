@@ -9,9 +9,6 @@ const Category = ({ isMobile, isTablet }) => {
   const {videos} = data;
   const {categories} = data;
 
- 
-
-  
 
   // Su función es devolver el JSX completo que se renderizará en la pantalla. Todo lo que está dentro del <>...</> (fragmento) es lo que React mostrará como la salida del componente.
   return (
