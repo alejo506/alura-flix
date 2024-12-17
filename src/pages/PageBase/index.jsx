@@ -3,7 +3,10 @@ import Header from "@/components/Header";
 import VideosProvider  from "@/context/Videos";
 import ContainerApp from "@/components/Container";
 import { Outlet } from "react-router-dom";
-ContainerApp
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const PageBase = () => {
 
     return (
@@ -14,6 +17,7 @@ const PageBase = () => {
 
             <ContainerApp >
                 <Outlet/>
+                <ToastContainer />
             </ContainerApp>
             
         </VideosProvider>

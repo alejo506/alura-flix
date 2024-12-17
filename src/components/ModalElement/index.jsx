@@ -13,7 +13,9 @@ const ModalElement = ({ open, onClose, children, style = {} }) => {
     boxShadow: 24,
     p: 4,
     borderRadius: "8px",
-    overflow: "auto", 
+    overflow: "auto",
+    border: "3px solid #ffffff85",
+
     ...style,
   };
 

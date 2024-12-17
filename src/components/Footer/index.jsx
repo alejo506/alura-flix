@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Footer  = () => {
 
@@ -16,6 +16,10 @@ const Footer  = () => {
                 }}
             >   
                 <img src="/img/aluraFlix.png"></img>
+                <Typography
+                    color="#2271D1"
+                >
+                    Develop by Alejandro</Typography>
             </Box>
     )
 }

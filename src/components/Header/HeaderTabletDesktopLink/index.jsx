@@ -30,7 +30,7 @@ const HeaderTabletDesktopLink = ({ buttonStyles }) => {
 
           <Link to="/add">
             <ButtonElement variant="outlined" sx={buttonStyles("#2271D1", "#2271D1", "#2271D1")} >
-              NUEVO VIDEO
+              NEW VIDEO
             </ButtonElement>
           </Link>
 

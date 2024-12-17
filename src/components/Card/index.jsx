@@ -4,7 +4,6 @@ import { VideosContext } from "@/context/Videos";
 import deleteBttn from "/icons/delete.svg";
 import updateBttn from "/icons/update.svg";
 import ModalElement from "../ModalElement";
-import { fieldStyles, selectStyles, menuItemStyles } from "@/utils/textFieldStyles";
 import { useModalState } from "@/customHook/useModalState";
 import VideoPlayerModal from "../ModalElement/Modals/VideoPlayerModal";
 import UpdateVideoForm from "../ModalElement/Modals/UpdateVideoFormModal";
@@ -135,9 +134,6 @@ const VideoCard = ({ video, $categoryColor }) => {
         <UpdateVideoForm
           video={selectedVideo}
           categories={categories}
-          fieldStyles={fieldStyles}
-          selectStyles={selectStyles}
-          menuItemStyles={menuItemStyles}
           closeUpdateModal={closeUpdateModal}
 
         />

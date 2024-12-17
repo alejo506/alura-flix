@@ -4,11 +4,10 @@ import ButtonElement from "@/components/ButtonElement/ButtonElement";
 import buttonStyles from "@/utils/buttonStyles";
 import { VideosContext } from "@/context/Videos";
 import TextFieldElement from "../TextFieldElement";
-import { fieldStyles, menuItemStyles, selectStyles } from "@/utils/textFieldStyles";
+import { fieldStyles, selectStyles, menuItemStyles } from "@/utils/textFieldStyles";
 
 
 const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }) => {
-  
   const { addVideo, updateVideo } = useContext(VideosContext);
 
   const [formValues, setFormValues] = useState({
@@ -57,7 +56,7 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
   const validateCategoria = (categoria) => {
     return categoria
       ? { error: false, message: "" }
-      : { error: true, message: "Must select a category." };
+      : { error: true, message: "Category selection is required." };
   };
 
   const validateThumbnail = (thumbnail) => {

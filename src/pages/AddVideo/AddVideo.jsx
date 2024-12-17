@@ -16,19 +16,8 @@ import AddIcon from '@mui/icons-material/Add';
 const AddVideo = () => {
   const { data, addCategory } = useContext(VideosContext);
   const { categories } = data;
-  
 
   const { open: openCategory, openModal: openCategoryModal, closeModal: closeCategoryModal } = useModalState();
-
-
-
-
-
-  const handleInputChange = (setter) => (event) => setter(event.target.value);
-
-
-
- 
 
   //Estados Modal para agregar Categoria
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -59,11 +48,10 @@ const AddVideo = () => {
           Fill out the form to create a new video card.
         </Typography>
       </Box>
-      <ButtonElement onClick={openCategoryModal} variant="outlined" sx={{...buttonStyles("#FFFFFF", "#2271d1"),marginBottom:"10px", marginLeft: { sm: "auto" }}} ><AddIcon sx={{ color: "#2271d1" }} />Category</ButtonElement>
+      <ButtonElement onClick={openCategoryModal} variant="outlined" sx={{...buttonStyles("#FFFFFF", "#2271d1"),marginBottom:"10px", marginLeft: { sm: "auto" }}} ><AddIcon sx={{ color: "#2271d1" }} />Manage category</ButtonElement>
 
       <VideoForm 
        categories={categories}
-      //  onAdd={addVideo}
        mode="create"
        fieldStyles={fieldStyles}
        selectStyles={selectStyles}
@@ -78,7 +66,6 @@ const AddVideo = () => {
 
       >
         <AddCategoryModal
-          onInputChange={handleInputChange}
           onUpdate={handleAddCategory}
           newCategoryName={newCategoryName}
           newCategoryColor={newCategoryColor}

@@ -1,12 +1,12 @@
 import VideoForm from "@/components/VideoForm";
 
 
-const UpdateVideoForm = ({ video, categories, onUpdate, fieldStyles, selectStyles, closeUpdateModal }) => (
+
+
+const UpdateVideoForm = ({ video, categories, onUpdate, closeUpdateModal }) => (
 
   <VideoForm 
     mode="edit"
-    fieldStyles={fieldStyles}
-    selectStyles={selectStyles}
     categories={categories}
     video={video}
     onUpdate={onUpdate}

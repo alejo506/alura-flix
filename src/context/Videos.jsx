@@ -1,39 +1,31 @@
 import { createContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify"; // Importa toast
 
-
-// Creamos el contexto
 export const VideosContext = createContext();
 VideosContext.displayName = "Videos";
 
-
 const api_url_videos = `https://67578164c0a427baf94ce4eb.mockapi.io/videos`;
 
-// Componente proveedor del contexto
 export default function VideosProvider({ children }) {
-
     const [data, setData] = useState({
         categories: [],
         videos: []
     });
 
-
     console.log(data);
 
     // ? VIDEOS
-    // No se agrega el method: Get porque es el metodo predeterminado del fetch
     const fetchVideos = async () => {
         try {
             const response = await fetch(api_url_videos);
             const videos = await response.json();
-
-            // Aquí puedes actualizar el estado para los videos
             setData(prevData => ({
                 ...prevData,
                 videos: videos
             }));
         } catch (error) {
-            console.error("Error al obtener los videos:", error);
+            toast.error("Error loading videos.");
         }
     };
 
@@ -41,19 +33,16 @@ export default function VideosProvider({ children }) {
         fetchVideos();
     }, []);
 
-
     const fetchCategories = async () => {
         try {
             const response = await fetch('https://67578164c0a427baf94ce4eb.mockapi.io/categories');
             const categories = await response.json();
-
-            // Aquí puedes actualizar el estado para las categorías
             setData(prevData => ({
                 ...prevData,
                 categories: categories
             }));
         } catch (error) {
-            console.error("Error al obtener las categorías:", error);
+            toast.error("Error loading categories.");
         }
     };
 
@@ -61,122 +50,145 @@ export default function VideosProvider({ children }) {
         fetchCategories();
     }, []);
 
-
-
     const addVideo = async (newVideo) => {
         try {
             const response = await fetch(api_url_videos, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newVideo)
             });
 
             const addedVideo = await response.json();
-
-            // Actualizamos el estado local
             setData(prevData => ({
                 ...prevData,
-                // videos: [...prevData.videos, { ...addedVideo, id: uuid() }]  // Agregamos el nuevo video
-                videos: [...prevData.videos, addedVideo]  // Agregamos el nuevo video
+                videos: [...prevData.videos, addedVideo]
             }));
+            toast.success("Video added successfully!");
         } catch (error) {
-            console.error("Error al agregar el video:", error);
+            toast.error("Error loading video");
         }
     };
-
 
     const deleteVideo = async (id) => {
         try {
-            const response = await fetch(`https://67578164c0a427baf94ce4eb.mockapi.io/videos/${id}`, {
-                method: "DELETE",
-            });
-
+            const response = await fetch(`${api_url_videos}/${id}`, { method: "DELETE" });
             if (response.ok) {
-                // Filtrar los videos que no tienen el id que queremos eliminar
-                const newVideos = data.videos.filter((video) => video.id !== id);
-
-                // Actualizar el estado con la lista de videos filtrados
+                const newVideos = data.videos.filter(video => video.id !== id);
                 setData(prevData => ({
                     ...prevData,
-                    videos: newVideos, // Actualizamos la lista de videos eliminando el video con el id
+                    videos: newVideos
                 }));
+                toast.success("Video deleted successfully!");
             } else {
-                console.error("Error al eliminar el video:", response.statusText);
+                toast.error("Error deleting the video:");
             }
         } catch (error) {
-            console.error("Error durante la eliminación", error);
+            toast.error("Error during video deletion.");
         }
     };
 
-
     const updateVideo = async (updatedVideo) => {
-
         try {
-            const response = await fetch(`https://67578164c0a427baf94ce4eb.mockapi.io/videos/${updatedVideo.id}`, {
+            const response = await fetch(`${api_url_videos}/${updatedVideo.id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': "application/json",
-                },
+                headers: { 'Content-Type': "application/json" },
                 body: JSON.stringify(updatedVideo)
             });
 
             const result = await response.json();
-
-            //Actualizar el estado local
             setData(prevData => ({
                 ...prevData,
-                videos: prevData.videos.map((video) =>
+                videos: prevData.videos.map(video =>
                     video.id === result.id ? { ...video, ...updatedVideo } : video
                 )
             }));
+            toast.success("Video updated successfully!");
         } catch (error) {
-            console.error("Error al actualizar el video", error);
-
+            toast.error("Error updating the video.");
         }
-    }
+    };
 
-
-
-    // ? CATEGORIAS
+    // ? CATEGORÍAS
     const addCategory = async (newCategory) => {
         try {
-
-            // Convertir la primera letra a mayúscula y el resto a minúscula
+            // Formateamos el nombre de la categoría con la primera letra en mayúscula
             const formattedCategory = {
                 ...newCategory,
                 nombre: newCategory.nombre[0].toUpperCase() + newCategory.nombre.slice(1).toLowerCase(),
             };
-
+    
+            // Verificamos si la categoría ya existe
+            const categoryExists = data.categories.some(category => category.nombre.toLowerCase() === formattedCategory.nombre.toLowerCase());
+    
+            if (categoryExists) {
+                // Si la categoría ya existe, mostramos un mensaje de error
+                toast.error("This category already exists.");
+                return;
+            }
+    
+            // Si no existe, agregamos la nueva categoría
             const response = await fetch('https://67578164c0a427baf94ce4eb.mockapi.io/categories', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formattedCategory)
             });
-
+    
             const addedCategory = await response.json();
-
-            // Actualizamos el estado local
-            setData({
-                ...data,
-                categories: [...data.categories, addedCategory],
-            });
+    
+            // Actualizamos el estado con la nueva categoría
+            setData(prevData => ({
+                ...prevData,
+                categories: [...prevData.categories, addedCategory]
+            }));
+    
+            // Mostramos un mensaje de éxito
+            toast.success("Category added successfully!");
         } catch (error) {
-            console.error("Error al agregar la categoría:", error);
+            // Mostramos un mensaje de error si algo sale mal
+            toast.error("Error adding the category.");
         }
     };
 
-
+    const deleteCategory = async (categoryId) => {
+        try {
+            // Filtrar los videos relacionados con esta categoría
+            const videosToDelete = data.videos.filter(video => video.categoryId === categoryId);
+    
+            // Eliminar todos los videos relacionados
+            for (const video of videosToDelete) {
+                await deleteVideo(video.id); // Llamamos a la función deleteVideo para cada video relacionado
+            }
+    
+            // Ahora eliminamos la categoría
+            const response = await fetch(`https://67578164c0a427baf94ce4eb.mockapi.io/categories/${categoryId}`, {
+                method: "DELETE",
+            });
+    
+            if (response.ok) {
+                // Filtrar las categorías eliminando la categoría con el id especificado
+                const newCategories = data.categories.filter(category => category.id !== categoryId);
+    
+                // Actualizar el estado para reflejar la eliminación de la categoría
+                setData(prevData => ({
+                    ...prevData,
+                    categories: newCategories
+                }));
+    
+                // Mostrar mensaje de éxito
+                toast.success("Category and related videos deleted successfully!");
+            } else {
+                toast.error("Error deleting the category.");
+            }
+        } catch (error) {
+            toast.error("Error deleting the category and related videos.");
+        }
+    };
+    
+    
 
     return (
-        <VideosContext.Provider value={{ data, addVideo, deleteVideo, updateVideo, addCategory }}>
+        <VideosContext.Provider value={{ data, addVideo, deleteVideo, updateVideo, addCategory, deleteCategory }}>
             {children}
         </VideosContext.Provider>
-
-    )
-};
-
-
+    );
+}
