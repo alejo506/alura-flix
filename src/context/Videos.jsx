@@ -6,14 +6,13 @@ export const VideosContext = createContext();
 VideosContext.displayName = "Videos";
 
 const api_url_videos = `https://67578164c0a427baf94ce4eb.mockapi.io/videos`;
+const api_url_categories = `https://67578164c0a427baf94ce4eb.mockapi.io/categories`
 
 export default function VideosProvider({ children }) {
     const [data, setData] = useState({
         categories: [],
         videos: []
     });
-
-    console.log(data);
 
     // ? VIDEOS
     const fetchVideos = async () => {
@@ -35,7 +34,7 @@ export default function VideosProvider({ children }) {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('https://67578164c0a427baf94ce4eb.mockapi.io/categories');
+            const response = await fetch(api_url_categories);
             const categories = await response.json();
             setData(prevData => ({
                 ...prevData,
@@ -111,100 +110,106 @@ export default function VideosProvider({ children }) {
     // ? CATEGORÍAS
     const addCategory = async (newCategory) => {
         try {
-            // Formateamos el nombre de la categoría con la primera letra en mayúscula
+            // Formatear el nombre de la categoría
+            const formattedName = newCategory.nombre.trim();
             const formattedCategory = {
                 ...newCategory,
-                nombre: newCategory.nombre[0].toUpperCase() + newCategory.nombre.slice(1).toLowerCase(),
+                nombre: formattedName.charAt(0).toUpperCase() + formattedName.slice(1).toLowerCase(),
             };
     
-            // Verificamos si la categoría ya existe
-            const categoryExists = data.categories.some(category => category.nombre.toLowerCase() === formattedCategory.nombre.toLowerCase());
-    
-            if (categoryExists) {
-                // Si la categoría ya existe, mostramos un mensaje de error
-                toast.error("This category already exists.");
-                return;
+            // Validar si la categoría ya existe
+            if (data.categories.some(cat => cat.nombre.toLowerCase() === formattedCategory.nombre.toLowerCase())) {
+                return toast.error("This category already exists.");
             }
     
-            // Si no existe, agregamos la nueva categoría
-            const response = await fetch('https://67578164c0a427baf94ce4eb.mockapi.io/categories', {
+            // Agregar la nueva categoría
+            const response = await fetch(api_url_categories, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formattedCategory)
+                body: JSON.stringify(formattedCategory),
             });
+    
+            if (!response.ok) throw new Error("Failed to add category.");
     
             const addedCategory = await response.json();
     
-            // Actualizamos el estado con la nueva categoría
+            // Actualizar el estado
             setData(prevData => ({
                 ...prevData,
-                categories: [...prevData.categories, addedCategory]
+                categories: [...prevData.categories, addedCategory],
             }));
     
-            // Mostramos un mensaje de éxito
             toast.success("Category added successfully!");
         } catch (error) {
-            // Mostramos un mensaje de error si algo sale mal
-            toast.error("Error adding the category.");
+            toast.error(`Error adding category: ${error.message}`);
         }
     };
+    
 
     const deleteCategory = async (categoryId) => {
         try {
-            // Obtener el nombre de la categoría a partir del ID
-            const category = data.categories.find((category) => category.id === categoryId);
+            // Encontrar la categoría y verificar si existe
+            const category = data.categories.find((cat) => cat.id === categoryId);
             if (!category) {
                 toast.error("Category not found.");
                 return;
             }
-            const categoryName = category.nombre; // Nombre de la categoría
     
-            // Filtrar los videos relacionados con esta categoría por nombre
-            const videosToDelete = data.videos.filter((video) => video.categoria === categoryName);
+            // Filtrar y eliminar los videos relacionados
+            const videosToDelete = data.videos.filter((video) => video.categoria === category.nombre);
+            await Promise.all(
+                videosToDelete.map((video) =>
+                    fetch(`${api_url_videos}/${video.id}`, { method: "DELETE" })
+                )
+            );
     
-            console.log(`Deleting ${videosToDelete.length} videos for category: ${categoryName}`);
-    
-            // Eliminar todos los videos relacionados en paralelo usando Promise.all
-            const deletePromises = videosToDelete.map((video) => {
-                return fetch(`${api_url_videos}/${video.id}`, {
-                    method: "DELETE",
-                }).then((response) => {
-                    if (!response.ok) {
-                        return Promise.reject(`Failed to delete video with id ${video.id}`);
-                    }
-                });
-            });
-    
-            // Esperar a que todas las promesas de eliminación de videos se resuelvan
-            await Promise.all(deletePromises);
-            console.log("All related videos deleted successfully.");
-    
-            // Ahora eliminamos la categoría
-            const response = await fetch(`https://67578164c0a427baf94ce4eb.mockapi.io/categories/${categoryId}`, {
+            // Eliminar la categoría
+            const response = await fetch(`${api_url_categories}/${categoryId}`, {
                 method: "DELETE",
             });
     
-            if (response.ok) {
-                console.log(`Category with ID: ${categoryId} deleted successfully.`);
-                
-                // Filtrar las categorías eliminando la categoría con el id especificado
-                const newCategories = data.categories.filter((category) => category.id !== categoryId);
+            if (!response.ok) throw new Error("Failed to delete category.");
     
-                // Actualizar el estado para reflejar la eliminación de la categoría
-                setData((prevData) => ({
-                    ...prevData,
-                    categories: newCategories,
-                }));
+            // Actualizar el estado local
+            setData((prevData) => ({
+                ...prevData,
+                categories: prevData.categories.filter((cat) => cat.id !== categoryId),
+                videos: prevData.videos.filter((video) => video.categoria !== category.nombre),
+            }));
     
-                toast.success("Category and related videos deleted successfully!");
-            } else {
-                const error = await response.text();
-                toast.error("Error deleting the category.");
-            }
+            toast.success("Category and related videos deleted successfully!");
         } catch (error) {
-            toast.error(`Error deleting the category and related videos: ${error.message}`);
+            toast.error(`Error deleting category: ${error.message}`);
         }
     };
+    
+    
+
+    const updateCategoryColor = async (categoryId, newColor) => {
+        try {
+            // Actualizar el color en el servidor
+            const response = await fetch(`${api_url_categories}/${categoryId}`, {
+                method: "PUT", // Usa "PATCH" si la API lo permite
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ color: newColor }),
+            });
+    
+            if (!response.ok) throw new Error("Failed to update category color.");
+    
+            // Actualizar el estado local
+            setData((prevData) => ({
+                ...prevData,
+                categories: prevData.categories.map((cat) =>
+                    cat.id === categoryId ? { ...cat, color: newColor } : cat
+                ),
+            }));
+    
+            // toast.success("Category color updated successfully!");
+        } catch (error) {
+            toast.error(`Error updating category color: ${error.message}`);
+        }
+    };
+    
     
     
     
@@ -212,7 +217,7 @@ export default function VideosProvider({ children }) {
     
 
     return (
-        <VideosContext.Provider value={{ data, addVideo, deleteVideo, updateVideo, addCategory, deleteCategory }}>
+        <VideosContext.Provider value={{ data, addVideo, deleteVideo, updateVideo, addCategory, deleteCategory, updateCategoryColor }}>
             {children}
         </VideosContext.Provider>
     );

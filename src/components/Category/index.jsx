@@ -1,43 +1,54 @@
-import React, { useContext } from "react";
-import { Box, Typography, Stack } from "@mui/material";
-
-import VideoCard from "../Card";
+import React, { useContext, useState } from "react";
+import { Box, Typography, Stack, TextField } from "@mui/material";
 import { VideosContext } from "@/context/Videos";
+import VideoCard from "../Card";
 
 const Category = ({ isMobile, isTablet }) => {
-  const { data } = useContext(VideosContext);
-  const {videos} = data;
-  const {categories} = data;
+  const { data, updateCategoryColor } = useContext(VideosContext);
+  const { videos, categories } = data;
 
+  const [colorTimers, setColorTimers] = useState({}); // Para manejar los timers por categoría
 
-  // Su función es devolver el JSX completo que se renderizará en la pantalla. Todo lo que está dentro del <>...</> (fragmento) es lo que React mostrará como la salida del componente.
+  const handleColorChange = (categoryId, newColor) => {
+    // Limpiar el timer anterior, si existe
+    if (colorTimers[categoryId]) {
+      clearTimeout(colorTimers[categoryId]);
+    }
+
+    // Crear un nuevo timer
+    const timer = setTimeout(() => {
+      updateCategoryColor(categoryId, newColor); // Llamar a la función de actualización
+    }, 300); // Esperar 300 ms
+
+    // Actualizar el estado con el nuevo timer
+    setColorTimers((prevTimers) => ({
+      ...prevTimers,
+      [categoryId]: timer,
+    }));
+  };
+
   return (
     <>
       {categories.map((category) => {
-        // Filtrar los videos por la categoría actual
-        const filteredVideos = videos.filter((videoFilter) => videoFilter.categoria === category.nombre);
+        const filteredVideos = videos.filter(
+          (video) => video.categoria === category.nombre
+        );
 
-        // Mostrar solo si hay videos en la categoría
         if (filteredVideos.length === 0) return null;
 
-        // Variable para pasarlo a la propiedad backgroundColor
-        const $categoryColor = category.color
+        const $categoryColor = category.color;
 
-        // Este return está dentro de la función de callback del map. El propósito de este return es decir qué debe generar para cada categoría.
         return (
-          <section key={category.id} >
-            {/* Título de la Categoría */}
-          
-            <Box >
+          <section key={category.id}>
+            <Box display="flex" flexDirection={isMobile && "column"} alignItems="center">
               <Stack
                 width={isMobile ? "200px" : isTablet ? "300px" : "345px"}
-                justifySelf={isTablet && "center"}
                 sx={{
                   height: "40px",
                   backgroundColor: $categoryColor,
                   borderRadius: "15px",
                   padding: "15px",
-                  margin: "43px 0 43px 25px",
+                  margin: `43px 0 ${isMobile ? "1px" : "43px"} 25px`,
                   justifyContent: "center",
                 }}
               >
@@ -52,21 +63,34 @@ const Category = ({ isMobile, isTablet }) => {
                   {category.nombre}
                 </Typography>
               </Stack>
+              <TextField
+                type="color"
+                value={$categoryColor}
+                onChange={(e) => handleColorChange(category.id, e.target.value)}
+                sx={{
+                  width: "100px",
+                  height: "100px",
+                  marginLeft: "10px",
+                  justifyContent: "center",
+                  ...(!isMobile && { marginLeft: "auto" }),  // Solo aplica marginLeft si no es móvil
+
+                  "& input": { height: "100%", width: "100%" },
+                  "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+                }}
+              />
             </Box>
 
-            {/* Contenedor de Cards */}
             <Box
-              justifyContent={isMobile || isTablet ? "center" : "flex-start"}
               sx={{
                 display: "flex",
                 gap: "16px",
                 flexWrap: "wrap",
                 margin: "0 25px",
+                justifyContent: isMobile || isTablet ? "center" : "flex-start",
               }}
             >
-              {/* Pasar los videos filtrados a las tarjetas */}
               {filteredVideos.map((video) => (
-                <VideoCard key={video.id} video={video} $categoryColor = {$categoryColor}/>
+                <VideoCard key={video.id} video={video} $categoryColor={$categoryColor} />
               ))}
             </Box>
           </section>

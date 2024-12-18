@@ -17,7 +17,6 @@ const AddCategoryModal = ({
 
   const { data, deleteCategory } = useContext(VideosContext);
   const { categories } = data;
-  console.log(data);
   
   // Estado para manejar la vista activa (Add o Delete)
   const [alignment, setAlignment] = useState("add");
@@ -40,13 +39,15 @@ const AddCategoryModal = ({
 
   // Función de validación
   const validateCategoryName = (categoryName) => {
+    const trimmedCategoryName = categoryName.trim(); // Eliminar espacios al principio y al final
     return {
       name: {
-        error: categoryName.length < 3,
-        message: categoryName.length < 3 ? "Must have at least 3 characters." : "",
+        error: trimmedCategoryName.length < 3, // Validar la longitud después de hacer trim
+        message: trimmedCategoryName.length < 3 ? "Must have at least 3 characters." : "",
       },
     };
   };
+  
 
   // Validar Select del Delete
   const validateCategoria = (categoria) => {
@@ -169,7 +170,7 @@ const AddCategoryModal = ({
             />
 
             <TextField
-              label="Color"
+              label="Select color"
               type="color"
               value={newCategoryColor}
               onChange={handleInputChange(setNewCategoryColor)}

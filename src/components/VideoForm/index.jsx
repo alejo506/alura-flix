@@ -48,7 +48,8 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
 
 
   const validateTitle = (title) => {
-    return title.length >= 3
+    const trimmedTitle = title.trim(); // Eliminar espacios en blanco al inicio y al final
+    return trimmedTitle.length >= 3
       ? { error: false, message: "" }
       : { error: true, message: "Must have at least 3 characters." };
   };
@@ -74,7 +75,8 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
   };
 
   const validateDescription = (description) => {
-    return description.length >= 10
+    const trimmedDescription = description.trim(); // Eliminar espacios en blanco al inicio y al final
+    return trimmedDescription.length >= 10
       ? { error: false, message: "" }
       : { error: true, message: "Must have at least 10 characters." };
   };
@@ -102,7 +104,7 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!validateAllFields()) {
-      console.log("Hay errores en el formulario.");
+      // console.log("Hay errores en el formulario.");
       return;
     }
 
