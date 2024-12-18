@@ -18,10 +18,10 @@ const AddCategoryModal = ({
   const { data, deleteCategory } = useContext(VideosContext);
   const { categories } = data;
   console.log(data);
-
+  
   // Estado para manejar la vista activa (Add o Delete)
   const [alignment, setAlignment] = useState("add");
-
+  
   const [categoryItems, setCategoryItem] = useState("");  // Inicializamos con "" en lugar de categories
 
   const handleInputChange = (setter) => (event) => setter(event.target.value);
@@ -82,7 +82,7 @@ const AddCategoryModal = ({
         exclusive
         onChange={handleChange}
         aria-label="Platform"
-        sx={{ marginBottom: "20px",  backgroundColor:"#cecece" }}
+        sx={{ marginBottom: "20px",  backgroundColor:"#fefefe" }}
       >
         <ToggleButton value="add">Add</ToggleButton>
         <ToggleButton value="delete">Delete</ToggleButton>
@@ -118,7 +118,10 @@ const AddCategoryModal = ({
           </TextField>
 
           <ButtonElement
-            onClick={() => deleteCategory(categoryItems)}
+            onClick={async () => {
+              await deleteCategory(categoryItems); // Eliminar categoría
+              setCategoryItem(""); // Restablecer el estado del select
+            }}
             sx={{
               ...buttonStyles("#D12222", "#D12222", "#D12222"), width: "50px", 
               "&.Mui-disabled": {...buttonStyles("#A9A9A9", "#A9A9A9", "#A9A9A9")}

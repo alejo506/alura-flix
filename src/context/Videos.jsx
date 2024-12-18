@@ -151,13 +151,33 @@ export default function VideosProvider({ children }) {
 
     const deleteCategory = async (categoryId) => {
         try {
-            // Filtrar los videos relacionados con esta categoría
-            const videosToDelete = data.videos.filter(video => video.categoryId === categoryId);
-    
-            // Eliminar todos los videos relacionados
-            for (const video of videosToDelete) {
-                await deleteVideo(video.id); // Llamamos a la función deleteVideo para cada video relacionado
+            // Obtener el nombre de la categoría a partir del ID
+            const category = data.categories.find((category) => category.id === categoryId);
+            if (!category) {
+                toast.error("Category not found.");
+                return;
             }
+            const categoryName = category.nombre; // Nombre de la categoría
+    
+            // Filtrar los videos relacionados con esta categoría por nombre
+            const videosToDelete = data.videos.filter((video) => video.categoria === categoryName);
+    
+            console.log(`Deleting ${videosToDelete.length} videos for category: ${categoryName}`);
+    
+            // Eliminar todos los videos relacionados en paralelo usando Promise.all
+            const deletePromises = videosToDelete.map((video) => {
+                return fetch(`${api_url_videos}/${video.id}`, {
+                    method: "DELETE",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return Promise.reject(`Failed to delete video with id ${video.id}`);
+                    }
+                });
+            });
+    
+            // Esperar a que todas las promesas de eliminación de videos se resuelvan
+            await Promise.all(deletePromises);
+            console.log("All related videos deleted successfully.");
     
             // Ahora eliminamos la categoría
             const response = await fetch(`https://67578164c0a427baf94ce4eb.mockapi.io/categories/${categoryId}`, {
@@ -165,24 +185,29 @@ export default function VideosProvider({ children }) {
             });
     
             if (response.ok) {
+                console.log(`Category with ID: ${categoryId} deleted successfully.`);
+                
                 // Filtrar las categorías eliminando la categoría con el id especificado
-                const newCategories = data.categories.filter(category => category.id !== categoryId);
+                const newCategories = data.categories.filter((category) => category.id !== categoryId);
     
                 // Actualizar el estado para reflejar la eliminación de la categoría
-                setData(prevData => ({
+                setData((prevData) => ({
                     ...prevData,
-                    categories: newCategories
+                    categories: newCategories,
                 }));
     
-                // Mostrar mensaje de éxito
                 toast.success("Category and related videos deleted successfully!");
             } else {
+                const error = await response.text();
                 toast.error("Error deleting the category.");
             }
         } catch (error) {
-            toast.error("Error deleting the category and related videos.");
+            toast.error(`Error deleting the category and related videos: ${error.message}`);
         }
     };
+    
+    
+    
     
     
 
