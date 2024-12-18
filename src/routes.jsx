@@ -3,6 +3,7 @@ import Home from './pages/Home/Home'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import PageBase from './pages/PageBase'
 import AddVideo from './pages/AddVideo/AddVideo'
+import NotFound from './pages/NotFound/NotFound'
 
 function AppRoutes() {
 
@@ -17,6 +18,7 @@ function AppRoutes() {
             <Route index element={<Home />} />
             {/* Ruta para agregar video */}
             <Route path='/add' element={<AddVideo />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

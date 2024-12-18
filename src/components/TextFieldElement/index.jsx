@@ -17,6 +17,7 @@ const TextFieldElement = ({ id, label, value, onChange, variant = "outlined", er
       multiline={multiline}
       rows={multiline ? rows : undefined}
       sx={sx}
+      autoComplete="off"
     />
   );
 };
