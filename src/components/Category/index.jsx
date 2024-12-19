@@ -83,7 +83,8 @@ const Category = ({ isMobile, isTablet }) => {
             <Box
               sx={{
                 display: "flex",
-                gap: "16px",
+                gap: "32px",
+                padding: "16px",
                 flexWrap: "wrap",
                 margin: "0 25px",
                 justifyContent: isMobile || isTablet ? "center" : "space-between",

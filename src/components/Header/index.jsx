@@ -14,7 +14,7 @@ const Header = () => {
       <AppBar
         position={isMobile ? "fixed" : "static"}
         sx={{
-          backgroundColor: "#000000E5",
+          backgroundColor: "#000000f2",
           width: "100%",
           bottom: isMobile ? 0 : "auto",
           top: isMobile ? "auto" : 0,
