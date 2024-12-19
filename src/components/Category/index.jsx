@@ -43,7 +43,7 @@ const Category = ({ isMobile, isTablet }) => {
             <Box
               display="flex"
               flexDirection={isMobile ? "column" : "row"}
-              alignItems="baseline"
+              alignItems={!isMobile ? "baseline" : "center"}
             >
               <Stack
                 minWidth={isMobile ? "250px" : isTablet ? "300px" : "345px"}

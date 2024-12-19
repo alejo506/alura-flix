@@ -50,7 +50,7 @@ const headerStyles = ($categoryColor) => ({
   height: "40px",
   fontSize: "25rem",
   '.MuiCardHeader-title': {
-    fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" },
+    fontSize: { xs: "1rem", sm: "1rem", md: "1.2rem" },
   },
   WebkitOverflowScrolling: "touch", // Mejora el desplazamiento en dispositivos táctiles
   // Personalización del scroll
