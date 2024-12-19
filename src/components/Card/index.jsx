@@ -115,7 +115,7 @@ const VideoCard = ({ video, $categoryColor }) => {
             }}
           >
             <CardMedia component="img" image={video.thumbnail} alt="Thumbnail" sx={mediaStyles} />
-            <Tooltip title={video.description} placement="left-start" arrow sx={{ "& .MuiTooltip-tooltip": { color: "white", backgroundColor: "black" } }}>
+            <Tooltip title={video.description} arrow sx={{ "& .MuiTooltip-tooltip": { color: "white", backgroundColor: "black" } }}>
               <Button
                 onClick={openVideoModal}
                 sx={{
