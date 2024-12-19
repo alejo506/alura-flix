@@ -17,7 +17,7 @@ const HeaderPhoneLink = ({ buttonStyles }) => {
                         variant="outlined"
                         sx={buttonStyles("#2271D1", "#2271D1")}
                     >
-                        <img src="/icons/home-phone.svg" alt="Home" style={{ marginRight: "8px" }} />
+                        <img src="/icons/home-phone.svg" alt="Home" style={{ marginRight: "8px", backgroundColor:"#000000E5" }} />
                         HOME
                     </Button>
                 </Link>
