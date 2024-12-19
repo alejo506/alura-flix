@@ -42,8 +42,8 @@ const AddCategoryModal = ({
     const trimmedCategoryName = categoryName.trim(); // Eliminar espacios al principio y al final
     return {
       name: {
-        error: trimmedCategoryName.length < 3, // Validar la longitud después de hacer trim
-        message: trimmedCategoryName.length < 3 ? "Must have at least 3 characters." : "",
+        error: trimmedCategoryName.length < 2, // Validar la longitud después de hacer trim
+        message: trimmedCategoryName.length < 2 ? "Must have at least 2 characters." : "",
       },
     };
   };

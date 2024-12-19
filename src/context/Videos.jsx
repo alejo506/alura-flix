@@ -91,21 +91,32 @@ export default function VideosProvider({ children }) {
             const response = await fetch(`${api_url_videos}/${updatedVideo.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': "application/json" },
-                body: JSON.stringify(updatedVideo)
+                body: JSON.stringify(updatedVideo),
             });
-
-            const result = await response.json();
+    
+            if (!response.ok) {
+                throw new Error("Failed to update the video.");
+            }
+    
+            const updatedResult = await response.json();
+    
+            // Actualiza el video en el estado global
             setData(prevData => ({
                 ...prevData,
                 videos: prevData.videos.map(video =>
-                    video.id === result.id ? { ...video, ...updatedVideo } : video
-                )
+                    video.id === updatedResult.id ? updatedResult : video
+                ),
             }));
+    
             toast.success("Video updated successfully!");
         } catch (error) {
+            console.error("Error updating the video:", error);
             toast.error("Error updating the video.");
         }
     };
+    
+    
+    
 
     // ? CATEGORÍAS
     const addCategory = async (newCategory) => {

@@ -3,13 +3,12 @@ import VideoForm from "@/components/VideoForm";
 
 
 
-const UpdateVideoForm = ({ video, categories, onUpdate, closeUpdateModal }) => (
+const UpdateVideoForm = ({ video, categories, closeUpdateModal }) => (
 
   <VideoForm 
     mode="edit"
     categories={categories}
     video={video}
-    onUpdate={onUpdate}
     closeUpdateModal = {closeUpdateModal}
   />
 

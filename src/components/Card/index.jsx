@@ -34,14 +34,35 @@ const imgBorderStyles = ($categoryColor) => ({
 
 });
 
+
+
 const headerStyles = ($categoryColor) => ({
   textAlign: "center",
   color: "#FFFFFF",
-  overflow: "auto",
-  padding: "8px",
+  overflow: "hidden",
+  padding: "15px",
   fontWeight: "bold",
   border: `4px solid ${$categoryColor}`,
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
+  height: "40px",
+  fontSize: "25rem",
+  '.MuiCardHeader-title':{
+    fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" },
+  },
+  WebkitOverflowScrolling: "touch", // Mejora el desplazamiento en dispositivos táctiles
+  // Personalización del scroll
+  '&::-webkit-scrollbar': {
+    width: '8px', // Ancho del scrollbar
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: "gray", // Color del thumb (parte movible)
+    borderRadius: '10px', // Bordes redondeados del thumb
+  },
+  '&::-webkit-scrollbar-track': {
+    background: 'rgba(255, 255, 255, 0.2)', // Color de la pista (fondo)
+    borderRadius: '10px', // Bordes redondeados de la pista
+  },
+
 });
 
 const actionStyles = ($categoryColor) => ({
@@ -58,8 +79,6 @@ const VideoCard = ({ video, $categoryColor }) => {
 
   const { open: openUpdate, openModal: openUpdateModal, closeModal: closeUpdateModal } = useModalState();
   const { open: openVideo, openModal: openVideoModal, closeModal: closeVideoModal } = useModalState();
-
-  const [selectedVideo] = useState(video);
 
   const handleDelete = () => deleteVideo(video.id);
 
@@ -132,7 +151,7 @@ const VideoCard = ({ video, $categoryColor }) => {
         style={{ backgroundColor: "#03122F", padding: "16px" }}
       >
         <UpdateVideoForm
-          video={selectedVideo}
+          video={video}
           categories={categories}
           closeUpdateModal={closeUpdateModal}
 
