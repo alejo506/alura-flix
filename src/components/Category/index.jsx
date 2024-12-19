@@ -86,7 +86,7 @@ const Category = ({ isMobile, isTablet }) => {
                 gap: "16px",
                 flexWrap: "wrap",
                 margin: "0 25px",
-                justifyContent: isMobile || isTablet ? "center" : "flex-start",
+                justifyContent: isMobile || isTablet ? "center" : "space-between",
               }}
             >
               {filteredVideos.map((video) => (

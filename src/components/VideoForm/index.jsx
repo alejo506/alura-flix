@@ -61,7 +61,11 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
   };
 
   const validateThumbnail = (thumbnail) => {
-    const urlRegex = /^(https?:\/\/).+\.(jpg|jpeg|png|gif)$/i;
+    // const urlRegex = /^(https?:\/\/).+\.(jpg|jpeg|png|gif)$/i;
+    const urlRegex = /^https?:\/\/.*/i;
+
+;
+    ;
     return urlRegex.test(thumbnail)
       ? { error: false, message: "" }
       : { error: true, message: "Must be a valid image link." };
