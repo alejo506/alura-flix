@@ -29,7 +29,7 @@ const Category = ({ isMobile, isTablet }) => {
 
   return (
     <>
-      {categories.map((category) => {
+      {categories.map((category, index) => {
         const filteredVideos = videos.filter(
           (video) => video.categoria === category.nombre
         );
@@ -39,11 +39,11 @@ const Category = ({ isMobile, isTablet }) => {
         const $categoryColor = category.color;
 
         return (
-          <section key={category.id}>
+          <section key={category.id} style={{  marginBottom: index === categories.length - 1 ? "0" : "75px"}}>
             <Box
               display="flex"
               flexDirection={isMobile ? "column" : "row"}
-              alignItems="center"
+              alignItems="baseline"
             >
               <Stack
                 minWidth={isMobile ? "250px" : isTablet ? "300px" : "345px"}
@@ -55,7 +55,7 @@ const Category = ({ isMobile, isTablet }) => {
                   backgroundColor: $categoryColor,
                   borderRadius: "15px",
                   padding: "15px",
-                  margin: `43px 0 ${isMobile ? "1px" : "43px"} 25px`,
+                  margin: `0px 0px ${isMobile ? "0px" : "73px"} 0px`,
                   justifyContent: "center",
                 }}
               >
@@ -93,9 +93,8 @@ const Category = ({ isMobile, isTablet }) => {
               sx={{
                 display: "flex",
                 gap: "32px",
-                padding: "16px",
                 flexWrap: "wrap",
-                margin: "0 25px",
+                margin: `${!isMobile ? "0 25px" : "0"}`,
                 justifyContent: isMobile || isTablet ? "center" : "space-between",
               }}
             >
