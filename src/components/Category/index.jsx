@@ -55,10 +55,12 @@ const Category = ({ isMobile, isTablet }) => {
                 <Typography
                   sx={{
                     color: "#FFFFFF",
-                    fontSize: "32px",
+                    fontSize: `${isMobile ? "32px" : "32px"}`,
                     fontWeight: "800",
                     alignSelf: "center",
+                    lineHeight: "1.5rem",
                   }}
+
                 >
                   {category.nombre}
                 </Typography>
