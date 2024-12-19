@@ -21,7 +21,7 @@ const AddVideo = () => {
 
   //Estados Modal para agregar Categoria
   const [newCategoryName, setNewCategoryName] = useState("");
-  const [newCategoryColor, setNewCategoryColor] = useState("#000000");
+  const [newCategoryColor, setNewCategoryColor] = useState("#FFFFFF");
 
 
   const handleAddCategory = () => {

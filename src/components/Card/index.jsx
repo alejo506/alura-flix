@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Card, CardMedia, CardActions, IconButton, Typography, CardHeader, Box, TextField, MenuItem, Button } from "@mui/material";
+import React, { useContext } from "react";
+import { Card, CardMedia, CardActions, IconButton, Typography, CardHeader, Box, Button, Tooltip } from "@mui/material";
 import { VideosContext } from "@/context/Videos";
 import deleteBttn from "/icons/delete.svg";
 import updateBttn from "/icons/update.svg";
@@ -42,11 +42,14 @@ const headerStyles = ($categoryColor) => ({
   overflow: "hidden",
   padding: "15px",
   fontWeight: "bold",
-  border: `4px solid ${$categoryColor}`,
+  borderLeft: `4px solid ${$categoryColor}`,
+  borderRight: `4px solid ${$categoryColor}`,
+  borderTop: "none",
+  borderBottom: "none",
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
   height: "40px",
   fontSize: "25rem",
-  '.MuiCardHeader-title':{
+  '.MuiCardHeader-title': {
     fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" },
   },
   WebkitOverflowScrolling: "touch", // Mejora el desplazamiento en dispositivos táctiles
@@ -112,23 +115,24 @@ const VideoCard = ({ video, $categoryColor }) => {
             }}
           >
             <CardMedia component="img" image={video.thumbnail} alt="Thumbnail" sx={mediaStyles} />
-            {/* Botón superpuesto */}
-            <Button
-              onClick={openVideoModal}
-              sx={{
-                position: "absolute", // Superpone el botón sobre la imagen
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                color: "white",
-                zIndex: 1, // Asegura que esté encima de la imagen
-                "&:hover": {
-                  background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
-                },
-              }}
-            >
-            </Button>
+            <Tooltip title={video.description} placement="left-start" arrow sx={{ "& .MuiTooltip-tooltip": { color: "white", backgroundColor: "black" } }}>
+              <Button
+                onClick={openVideoModal}
+                sx={{
+                  position: "absolute", // Superpone el botón sobre la imagen
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  color: "white",
+                  zIndex: 1, // Asegura que esté encima de la imagen
+                  "&:hover": {
+                    background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
+                  },
+                }}
+              >
+              </Button>
+            </Tooltip>
           </Box>
         </Box>
         <CardHeader title={video.title} sx={headerStyles($categoryColor)} />
