@@ -24,7 +24,8 @@ const Home = () => {
     
                 {/* Contenedor principal */}
                 <Box
-                    paddingBottom={isMobile ? "110px " : "20px 0"}
+                    // paddingBottom={isMobile ? "110px " : "20px 0"}
+                    paddingBottom="20px 0"
                     sx={{
                         display: "flex",
                         flexDirection: "column",

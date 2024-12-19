@@ -2,7 +2,7 @@
   // Estilos comunes reutilizables
 const buttonStyles = (borderColor, textColor, boxShadow) => ({
     borderColor: borderColor,
-    backgroundColor: "transparent",
+    backgroundColor: "#000000E5",
     color: textColor,
     minWidth: 160,
     fontSize: "18px",
