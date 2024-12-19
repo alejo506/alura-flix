@@ -46,7 +46,7 @@ const Category = ({ isMobile, isTablet }) => {
               alignItems="center"
             >
               <Stack
-                width={isMobile ? "200px" : isTablet ? "300px" : "345px"}
+                width={isMobile ? "275px" : isTablet ? "300px" : "345px"}
                 minHeight="40px"
                 sx={{
                   whiteSpace: "normal", // Permite saltos de línea
