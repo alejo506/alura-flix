@@ -93,7 +93,7 @@ const AddCategoryModal = ({
       {alignment === "delete" && (
         <Box alignItems="center" sx={{ width: "100%", display: "flex", flexDirection:"column", gap: "30px" }}>
           <TitleElement
-            text="Delete Category : "
+            text="Delete Category "
             sx={{ fontWeight: "900", color: "#2271D1" }}
           />
 
