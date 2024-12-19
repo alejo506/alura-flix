@@ -40,11 +40,18 @@ const Category = ({ isMobile, isTablet }) => {
 
         return (
           <section key={category.id}>
-            <Box display="flex" flexDirection={isMobile && "column"} alignItems="center">
+            <Box
+              display="flex"
+              flexDirection={isMobile ? "column" : "row"}
+              alignItems="center"
+            >
               <Stack
                 width={isMobile ? "200px" : isTablet ? "300px" : "345px"}
+                minHeight="40px"
                 sx={{
-                  height: "40px",
+                  whiteSpace: "normal", // Permite saltos de línea
+                  wordBreak: "break-word", // Asegura que las palabras largas no desborden
+                  overflow: "visible", // Elimina restricciones de desbordamiento
                   backgroundColor: $categoryColor,
                   borderRadius: "15px",
                   padding: "15px",
