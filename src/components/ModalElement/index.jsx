@@ -8,11 +8,11 @@ const ModalElement = ({ open, onClose, children, style = {} }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "80%", 
+    width: "90%", 
     maxWidth: 800, 
     // bgcolor: "background.paper",
     boxShadow: 24,
-    p: 3.5,
+    p: 1,
     borderRadius: "8px",
     overflow: "auto",
     border: "3px solid #ffffff85",
@@ -30,8 +30,8 @@ const ModalElement = ({ open, onClose, children, style = {} }) => {
             onClick={onClose}
             sx={{
               position: "absolute",
-              top: 0,
-              right: 0,
+              top: 2,
+              right: 2,
               color: "#FFFFFF",
             }}
           >

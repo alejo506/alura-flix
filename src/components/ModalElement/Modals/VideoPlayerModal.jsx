@@ -8,6 +8,7 @@ const VideoPlayerModal = ({ videoURL }) => (
         maxWidth: "800px",
         borderRadius: "16px",
         overflow: "hidden",
+        border: '1px solid #cfcfcf45',
       }}
     >
       <iframe

@@ -9,6 +9,7 @@ import VideoPlayerModal from "../ModalElement/Modals/VideoPlayerModal";
 import UpdateVideoForm from "../ModalElement/Modals/UpdateVideoFormModal";
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
+// Styles for the card container
 const cardStyles = {
   width: { xs: "90%", sm: "45%", md: "30%" },
   maxWidth: "400px",
@@ -19,11 +20,12 @@ const cardStyles = {
   justifyContent: "center",
   transition: "transform 0.3s ease",
   "&:hover": {
-    transform: "scale(1.1)",
+    transform: "scale(1.02)",
   },
 
 };
 
+// Styles for the media element
 const mediaStyles = {
   width: "100%",
   height: "350px",
@@ -33,14 +35,14 @@ const mediaStyles = {
   objectPosition: "center"
 };
 
+// Styles for the border around the media element
 const imgBorderStyles = ($categoryColor) => ({
   border: `4px solid ${$categoryColor}`,
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
 
 });
 
-
-
+// Styles for the card header
 const headerStyles = ($categoryColor) => ({
   textAlign: "center",
   color: "#FFFFFF",
@@ -74,6 +76,7 @@ const headerStyles = ($categoryColor) => ({
 
 });
 
+// Styles for the card actions
 const actionStyles = ($categoryColor) => ({
   justifyContent: "space-evenly",
   borderBottomLeftRadius: "15px",
@@ -82,6 +85,7 @@ const actionStyles = ($categoryColor) => ({
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
 });
 
+// VideoCard component
 const VideoCard = ({ video, $categoryColor }) => {
   const { deleteVideo, data } = useContext(VideosContext);
   const { categories } = data;
@@ -94,6 +98,7 @@ const VideoCard = ({ video, $categoryColor }) => {
 
   return (
     <>
+      {/* Card Container */}
       <Card sx={cardStyles} key={video.id} >
         <Box
           sx={{
@@ -111,9 +116,9 @@ const VideoCard = ({ video, $categoryColor }) => {
           }}
         >
 
+          {/* Media Container */}
           <Box
             sx={{
-              // width: "400px",
               height: "350px",
               position: "relative", // Contenedor relativo para posicionar el botón sobre la imagen
               overflow: "hidden",
@@ -144,17 +149,15 @@ const VideoCard = ({ video, $categoryColor }) => {
                   height: "100%",
                   color: "white",
                   zIndex: 2, // Asegura que esté encima de la imagen
-                  // "&:hover": {
-                  //   background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
-
-                  // },
                 }}
               >
               </Button>
             </Tooltip>
           </Box>
         </Box>
+        {/* Card Header */}
         <CardHeader title={video.title} sx={headerStyles($categoryColor)} />
+        {/* Card Actions */}
         <CardActions sx={actionStyles($categoryColor)}>
           <IconButton aria-label="delete" size="large" onClick={handleDelete}>
             <img src={deleteBttn} alt="Delete" />
@@ -200,10 +203,3 @@ const VideoCard = ({ video, $categoryColor }) => {
 };
 
 export default VideoCard;
-
-
-
-
-
-
-
