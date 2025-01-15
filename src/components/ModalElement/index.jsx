@@ -1,4 +1,5 @@
 import { Modal, Box, IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const ModalElement = ({ open, onClose, children, style = {} }) => {
@@ -25,17 +26,17 @@ const ModalElement = ({ open, onClose, children, style = {} }) => {
     // onClose={handleClose}
     >
       <Box sx={{ ...defaultStyle }}>
-          <IconButton
+          <CloseIcon
             onClick={onClose}
             sx={{
               position: "absolute",
-              top: -10,
+              top: 0,
               right: 0,
               color: "#FFFFFF",
             }}
           >
-            ✖
-          </IconButton>
+            {/* ✖ */}
+          </CloseIcon>
           {children}
         </Box>
     </Modal>

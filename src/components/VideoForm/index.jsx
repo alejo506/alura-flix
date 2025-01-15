@@ -49,7 +49,7 @@ const VideoForm = ({ categories = [], video, mode = "create", closeUpdateModal }
 
   const validateTitle = (title) => {
     const trimmedTitle = title.trim(); // Eliminar espacios en blanco al inicio y al final
-    return trimmedTitle.length >= 3 && trimmedTitle.length < 74
+    return trimmedTitle.length >= 3 && trimmedTitle.length < 65
       ? { error: false, message: "" }
       : { error: true, message: "Must have at least 3 characters and no more than 73 characters." };
   };

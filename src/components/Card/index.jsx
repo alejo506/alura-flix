@@ -7,6 +7,7 @@ import ModalElement from "../ModalElement";
 import { useModalState } from "@/customHook/useModalState";
 import VideoPlayerModal from "../ModalElement/Modals/VideoPlayerModal";
 import UpdateVideoForm from "../ModalElement/Modals/UpdateVideoFormModal";
+import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
 const cardStyles = {
   width: { xs: "90%", sm: "45%", md: "30%" },
@@ -16,6 +17,10 @@ const cardStyles = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  transition: "transform 0.3s ease",
+  "&:hover": {
+    transform: "scale(1.1)",
+  },
 
 };
 
@@ -50,7 +55,8 @@ const headerStyles = ($categoryColor) => ({
   height: "40px",
   fontSize: "25rem",
   '.MuiCardHeader-title': {
-    fontSize: { xs: "1rem", sm: "1rem", md: "1.2rem" },
+    fontSize: { xs: "1rem", sm: "0.8rem", md: "1rem" },
+
   },
   WebkitOverflowScrolling: "touch", // Mejora el desplazamiento en dispositivos táctiles
   // Personalización del scroll
@@ -88,7 +94,7 @@ const VideoCard = ({ video, $categoryColor }) => {
 
   return (
     <>
-      <Card sx={cardStyles} key={video.id}>
+      <Card sx={cardStyles} key={video.id} >
         <Box
           sx={{
             position: "relative",
@@ -114,6 +120,18 @@ const VideoCard = ({ video, $categoryColor }) => {
               borderRadius: "8px", // Bordes redondeados opcionales
             }}
           >
+
+            <SmartDisplayIcon
+              sx={{
+                position: "absolute",
+                top: "50%", // Center the icon vertically
+                left: "50%", // Center the icon horizontally
+                transform: "translate(-50%, -50%)", // Adjust to center exactly
+                color: "white", 
+                zIndex: 1, // Ensure it's above the image
+                fontSize: "4.5rem", 
+              }}
+            />
             <CardMedia component="img" image={video.thumbnail} alt="Thumbnail" sx={mediaStyles} />
             <Tooltip title={video.description} arrow sx={{ "& .MuiTooltip-tooltip": { color: "white", backgroundColor: "black" } }}>
               <Button
@@ -125,10 +143,11 @@ const VideoCard = ({ video, $categoryColor }) => {
                   width: "100%",
                   height: "100%",
                   color: "white",
-                  zIndex: 1, // Asegura que esté encima de la imagen
-                  "&:hover": {
-                    background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
-                  },
+                  zIndex: 2, // Asegura que esté encima de la imagen
+                  // "&:hover": {
+                  //   background: "rgba(0, 0, 0, 0.4)", // Cambio de fondo al pasar el mouse (opcional)
+
+                  // },
                 }}
               >
               </Button>
