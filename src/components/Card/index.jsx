@@ -55,7 +55,7 @@ const headerStyles = ($categoryColor) => ({
   borderBottom: "none",
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
   height: "40px",
-  fontSize: "25rem",
+  fontSize: "2.5rem",
   '.MuiCardHeader-title': {
     fontSize: { xs: "1rem", sm: "0.8rem", md: "1rem" },
 
