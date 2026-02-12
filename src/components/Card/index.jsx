@@ -46,7 +46,7 @@ const imgBorderStyles = ($categoryColor) => ({
 const headerStyles = ($categoryColor) => ({
   textAlign: "center",
   color: "#FFFFFF",
-  overflow: "visible",
+  overflow: "hidden",
   padding: "15px",
   fontWeight: "bold",
   borderLeft: `4px solid ${$categoryColor}`,
@@ -55,7 +55,7 @@ const headerStyles = ($categoryColor) => ({
   borderBottom: "none",
   boxShadow: `0px 0px 8px 1px ${$categoryColor} inset`,
   height: "40px",
-  fontSize: "2.5rem",
+  fontSize: "25rem",
   '.MuiCardHeader-title': {
     fontSize: { xs: "1rem", sm: "0.8rem", md: "1rem" },
 
