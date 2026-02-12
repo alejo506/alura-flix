@@ -46,7 +46,7 @@ const imgBorderStyles = ($categoryColor) => ({
 const headerStyles = ($categoryColor) => ({
   textAlign: "center",
   color: "#FFFFFF",
-  overflow: "visibility",
+  overflow: "visible",
   padding: "15px",
   fontWeight: "bold",
   borderLeft: `4px solid ${$categoryColor}`,
